@@ -1,2 +1,2 @@
-from .Mammals import Mammals
-from .Birds import Birds
+from Animals.Mammals import Mammals
+from Animals.Birds import Birds
