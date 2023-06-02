@@ -1,3 +1,5 @@
+from threading import Thread
+
 from flask import Flask, request, jsonify
 
 from ActiveMQ.AMQListener import AMQListener
@@ -16,7 +18,17 @@ def hello():
     return jsonify(data)
 
 
-if __name__ == '__main__':
+def flask_thread():
+    app.run()
+
+
+def schedule_task():
     aMQListener = AMQListener()
     aMQListener.loop_monitor()
-    app.run()
+
+
+if __name__ == '__main__':
+    scheduler_thread = Thread(target=schedule_task)
+    scheduler_thread.start()
+    flask_thread = Thread(target=flask_thread)
+    flask_thread.start()
