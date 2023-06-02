@@ -8,7 +8,7 @@ class AMQListener(object):
 
     def __init__(self):
         self.location_queue = "test-activemq-queue"
-        self.conn = stomp.Connection([('127.0.0.1', 61613)])
+        self.conn = stomp.Connection([('188.166.120.249', 61613)])
         self.conn.connect(username='admin', passcode='admin', wait=True)
 
     def on_message(self, message):
