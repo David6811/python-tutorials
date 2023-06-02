@@ -3,20 +3,28 @@ import datetime
 import time
 import sched
 
+enableGetTask = True
 
 class AMQListener(object):
 
     def __init__(self):
         self.location_queue = "test-activemq-queue"
         self.conn = stomp.Connection([('188.166.120.249', 61613)])
-        self.conn.connect(username='admin', passcode='admin', wait=True)
 
     def on_message(self, message):
+        global enableGetTask
+        enableGetTask = False
         print('message: %s' % message.body)
+        time.sleep(10)
+        enableGetTask = True
 
     def receive_from_queue(self):
-        self.conn.set_listener('SampleListener', AMQListener())
-        self.conn.subscribe(self.location_queue, 12)
+        if enableGetTask:
+            print("Server is free and re-connect")
+            self.conn.connect(username='admin', passcode='admin', wait=True)
+            self.conn.set_listener('SampleListener', AMQListener())
+            self.conn.subscribe(self.location_queue, 12)
+            self.conn.disconnect()
         # while True:
         #     pass
 
