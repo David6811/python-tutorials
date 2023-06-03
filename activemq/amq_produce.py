@@ -1,7 +1,7 @@
 import stomp
 
 location_queue = "test-activemq-queue"
-conn = stomp.Connection([('143.198.60.1', 61613)])
+conn = stomp.Connection([('127.0.0.1', 61613)])
 conn.connect(username='admin', passcode='admin', wait=True)
 
 
